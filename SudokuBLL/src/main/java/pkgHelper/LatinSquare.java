@@ -1,6 +1,8 @@
 package pkgHelper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+
 
 public class LatinSquare {
 
@@ -11,7 +13,28 @@ public class LatinSquare {
 	 * @since Lab #1
 	 */
 	private int[][] LatinSquare;
+	
+	private boolean bIgnoreZero;
+	
+	protected ArrayList<PuzzleViolation> PV = new ArrayList<PuzzleViolation>();
+	
+	public void setLatinSquare(int[][] latinSquare) {
+		LatinSquare = latinSquare;
+	}
+	
+	protected void setbIgnoreZero(boolean bIgnoreZero) {
+		this.bIgnoreZero = bIgnoreZero;
 
+	}
+
+	public boolean isbIgnoreZero() {
+		return bIgnoreZero;
+	}
+	
+	protected java.util.ArrayList<PuzzleViolation> getPv(){
+		return PV;
+	}
+	
 	/**
 	 * No-arg constructor, make it public, don't do anything in the constructor
 	 * 
@@ -67,7 +90,6 @@ public class LatinSquare {
 	 * @return - return 'true' if iValue exists in arr
 	 */
 	public boolean doesElementExist(int[] arr, int iValue) {
-		// TODO: Return 'true' if iValue is found in arr
 
 		boolean doesElementExist = false;
 		for (int i = 0; i < arr.length; i++) {
@@ -99,8 +121,6 @@ public class LatinSquare {
 	 * @return one dimensional array of values for the given column
 	 */
 	public int[] getColumn(int iCol) {
-
-		// TODO: Return a given column from LatinSquare
 
 		int[] Col = new int[this.LatinSquare.length];
 
@@ -193,8 +213,6 @@ public class LatinSquare {
 	 */
 	public boolean hasDuplicates(int[] arr) {
 
-		// TODO: Return 'true' if any element in arr is duplicate
-
 		boolean hasDuplicates = false;
 		int[] sortedArray = Arrays.copyOf(arr, arr.length);
 		Arrays.sort(sortedArray);
@@ -205,6 +223,24 @@ public class LatinSquare {
 				break;
 			}
 		}
+		return hasDuplicates;
+	}
+	
+	protected boolean hasDuplicates() {
+		boolean hasDuplicates = false;
+		
+		for (int d = 0; d < LatinSquare.length; d++) {
+			if (hasDuplicates(getRow(d))) {
+				hasDuplicates = true;
+				break;
+			}
+			
+			if (hasDuplicates(getColumn(d))) {
+				hasDuplicates = true;
+				break;
+			}
+		}
+		
 		return hasDuplicates;
 	}
 
@@ -263,7 +299,34 @@ public class LatinSquare {
 	 *            - pass in an instance of a possible LatinSquare
 	 */
 
-	public void setLatinSquare(int[][] latinSquare) {
-		LatinSquare = latinSquare;
+	protected int[] RemoveZeros(int[] arr) {
+		int zeros = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if(arr[i] == 0) {
+				zeros++;
+			}
+		}
+		
+		int[] newArray = new int[arr.length-zeros];
+		int idx = 0;
+		
+		for (int i = 0; i < arr.length; i++) {
+			if(arr[i] != 0) {
+				newArray[idx] = arr[i];
+				idx++;
+			}
+		}
+		
+		return newArray;
+	}
+		
+	
+	protected void ClearPuzzleViolation() {
+		PV.clear();
+	}
+	
+	protected void AddPuzzleViolation(PuzzleViolation pv) {
+		PV.add(pv);
 	}
 }
+

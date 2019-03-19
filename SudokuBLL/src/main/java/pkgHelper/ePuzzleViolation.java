@@ -7,7 +7,7 @@ public enum ePuzzleViolation {
 			
 		}
 		
-		static ePuzzleViolation valueOf(java.lang.String name) {
+		static ePuzzleViolation valueOf(String name) {
 			ePuzzleViolation valueOf = null;
 			for(ePuzzleViolation violation : ePuzzleViolation.values()) {
 				if(violation.toString()==name) {
